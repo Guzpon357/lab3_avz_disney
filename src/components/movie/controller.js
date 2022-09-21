@@ -26,7 +26,6 @@ export const create = async(req, res) => {
         })
     }
 }
-
 export const readAll = async(req, res) =>{
     try{
 
@@ -88,7 +87,6 @@ export const readAll = async(req, res) =>{
         })
       }
 }
-
 export const readOne = async(req, res) =>{
     try{
         const { id } = req.params
@@ -113,7 +111,6 @@ export const readOne = async(req, res) =>{
         })
       }
 }
-
 export const update = async(req, res) =>{
     try{
         const { id } = req.params
@@ -138,7 +135,6 @@ export const update = async(req, res) =>{
         })
       }
 }
-
 export const deleteOne = async(req, res) =>{
     try{
         const { id } = req.params

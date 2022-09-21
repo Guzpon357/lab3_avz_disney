@@ -1,14 +1,8 @@
 import { PrismaClient } from "@prisma/client";
-//import set from 'date-fns';
-//We create a instance of PrismaClient
 const prisma = new PrismaClient();
-//We define a asynchronous function to send queries to DB
-
-//CREATE
 export const create = async(req, res) => {    
     try{
     const { name, image, movieId } = req.body;
-        // Validate user input
     if (!(name && image && movieId)) {
     return res.status(400).send("All input is required");
     }
@@ -17,10 +11,8 @@ export const create = async(req, res) => {
             name,     
             image,    
             movieId,   
- 
         }
     })
-        // return new genre    
         return res.status(201).json({
         data: createGenre,
         info: "Genre created",
@@ -32,8 +24,6 @@ export const create = async(req, res) => {
         })
     }
 }
-
-////READ
 export const readAll = async(req, res) =>{
     try{
         const findAll = await prisma.genre.findMany()
@@ -42,7 +32,6 @@ export const readAll = async(req, res) =>{
         console.log(err);
       }
 }
-
 export const readOne = async(req, res) =>{
     try{
         const { id } = req.params
@@ -59,8 +48,6 @@ export const readOne = async(req, res) =>{
         })
       }
 }
-
-//UPDATE
 export const update = async(req, res) =>{
     try{
         const { id } = req.params
@@ -83,8 +70,6 @@ export const update = async(req, res) =>{
         })
       }
 }
-
-//DELETE
 export const deleteOne = async(req, res) =>{
     try{
         const { id } = req.params

@@ -40,7 +40,6 @@ export const readAll = async(req, res) =>{
         })
       }
 }
-
 export const readOne = async(req, res) =>{
     try{
         const { id } = req.params
@@ -65,86 +64,6 @@ export const readOne = async(req, res) =>{
         })
       }
 }
-
-export const searchByName = async(req,res)=>{
-  try{
-    const { name } = req.params
-    const findbyName = await prisma.character.findMany({
-        where: {
-            name: name,
-        },
-        include: {
-            movies: true,
-            movies: {
-                include: {
-                    movie: true
-                }
-            }
-        }
-    })
-    return res.json(findbyName)
-  }catch (err) {
-        console.log(err);
-        return res.json({
-            info: "Can't read that character",
-            error: err.message
-        })
-      }
-}
-
-export const searchByAge = async(req,res)=>{
-  try{
-    const { age } = req.params
-    const findbyAge = await prisma.character.findMany({
-        where: {
-            age: age,
-        },
-        include: {
-            movies: true,
-            movies: {
-                include: {
-                    movie: true
-                }
-            }
-        }
-    })
-    return res.json(findbyAge)
-  }catch (err) {
-        console.log(err);
-        return res.json({
-            info: "Can't read that character",
-            error: err.message
-        })
-    }
-}
-
-export const searchByMovie = async(req,res)=>{
-  try{
-        const { movie } = req.params
-        const findbyMovie = await prisma.character.findMany({
-            where: {
-                movie: movie,
-            },
-            include: {
-                movies: true,
-                movies: {
-                    include: {
-                        movie: true
-                    }
-                }
-            } 
-    })
-    return res.json(findbyAge)
-  }catch (err) {
-      console.log(err);
-      return res.json({
-          info: "Can't read that character",
-          error: err.message
-      })
-  }
-
-}
-
 export const update = async(req, res) =>{
     try{
         const { id } = req.params
@@ -170,7 +89,6 @@ export const update = async(req, res) =>{
         })
       }
 }
-
 export const deleteOne = async(req, res) =>{
     try{
         const { id } = req.params
