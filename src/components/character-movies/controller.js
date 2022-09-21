@@ -7,14 +7,14 @@ export const create = async(req, res) => {
     if (!(characterId && movieId)) {
     return res.status(400).send("All input is required");
     }
-    const createCharacterOnMovie= await prisma.charactersOnMovies.create({
+    const createMovieCharacter= await prisma.movieCharacters.create({
         data:{    
             characterId: characterId,
             movieId: movieId
         }
     })
         return res.status(201).json({
-        data: createCharacterOnMovie,
+        data: createMovieCharacter,
         info: "Characters on movies created",
     });
     } catch (err) {
@@ -27,7 +27,7 @@ export const create = async(req, res) => {
 }
 export const readAll = async(req, res) =>{
     try{
-        const findAll = await prisma.charactersOnMovies.findMany()
+        const findAll = await prisma.movieCharacters.findMany()
         return res.json(findAll)
     }catch (err) {
         console.log(err);
@@ -40,7 +40,7 @@ export const readAll = async(req, res) =>{
 export const readOne = async(req, res) =>{
     try{
         const { id } = req.params
-        const findOne = await prisma.charactersOnMovies.findUnique({
+        const findOne = await prisma.movieCharacters.findUnique({
             where: {
                 id: Number(id),
             }
@@ -57,14 +57,14 @@ export const readOne = async(req, res) =>{
 export const deleteOne = async(req, res) =>{
     try{
         const { id } = req.params
-        const deleteCharacterOnMovie = await prisma.characterOnMovie.delete({
+        const deleteMovieCharacter = await prisma.movieCharacters.delete({
             where: {
                 id: Number(id),
             },
         })
         return res.json({
             info:"Characters on movies deleted",
-            data: deleteCharacterOnMovie
+            data: deleteMovieCharacter
             
         })
     }catch (err) {
