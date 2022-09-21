@@ -31,7 +31,7 @@ export const signup = async (req, res) => {
       { user_id: user._id, email },
       process.env.TOKEN_KEY,
       {
-        expiresIn: "10h",
+        expiresIn: "2h",
       }
     );
     user.token = token;
