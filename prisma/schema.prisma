@@ -1,0 +1,71 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           Int      @id @default(autoincrement())
+  email        String   @unique
+  password     String
+  name         String?
+  phone_number String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@map("users")
+}
+
+model Character {
+  id              Int               @id @default(autoincrement())
+  name            String
+  date_birth      DateTime?
+  image           String?
+  weight          Float?
+  history         String?
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  MovieCharacters MovieCharacters[]
+
+  @@map("characters")
+}
+
+model Movie {
+  id           Int               @id @default(autoincrement())
+  image        String?
+  title        String?
+  date_created DateTime
+  score        Int
+  characters   MovieCharacters[]
+  genres       Genre[]
+
+  @@map("movies")
+}
+
+model Genre {
+  id      Int     @id @default(autoincrement())
+  name    String
+  image   String?
+  movies  Movie   @relation(fields: [movieId], references: [id], onDelete: Cascade)
+  movieId Int
+
+  @@map("genres")
+}
+
+model MovieCharacters {
+  character   Character @relation(fields: [characterId], references: [id], onDelete: Cascade)
+  characterId Int // relation scalar field (used in the `@relation` attribute above)
+  movie       Movie     @relation(fields: [movieId], references: [id], onDelete: Cascade)
+  movieId     Int // relation scalar field (used in the `@relation` attribute above)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@id([characterId, movieId])
+  @@map("moviecharacters")
+}
