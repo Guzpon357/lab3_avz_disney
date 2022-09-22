@@ -3,15 +3,15 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 export const create = async(req, res) => {    
     try{
-    const { image, name, birth_date, weight, history } = req.body;
-    if (!(image && name && birth_date && weight && history)) {
+    const { image, name, date_birth, weight, history } = req.body;
+    if (!(image && name && date_birth && weight && history)) {
     return res.status(400).send("All input is required");
     }
     const createCharacter = await prisma.character.create({
         data:{
             image,     
             name,    
-            birth_date: new Date(birth_date),
+            date_birth: new Date(date_birth),
             weight,     
             history,   
  
@@ -46,13 +46,6 @@ export const readOne = async(req, res) =>{
         const findOne = await prisma.character.findUnique({
             where: {
                 id: Number(id),
-            },
-            include: {
-                movies: {
-                    include: {
-                        movie: true
-                    }
-                }
             }
         })
         return res.json(findOne)
@@ -67,7 +60,7 @@ export const readOne = async(req, res) =>{
 export const update = async(req, res) =>{
     try{
         const { id } = req.params
-        const { image, name, birth_date, weight, history } = req.body;
+        const { image, name, date_birth, weight, history } = req.body;
         const updateCharacter = await prisma.character.update({
             where: {
                 id: Number(id),
@@ -75,7 +68,7 @@ export const update = async(req, res) =>{
             data: {
                 image: image, 
                 name: name,
-                birth_date: new Date(birth_date),
+                date_birth: new Date(date_birth),
                 weight: weight,
                 history: history 
             },
